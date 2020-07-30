@@ -11,16 +11,18 @@ jobs:
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        container_tag:
-        - 2.6.5-bionic
-        - 2.7.0-bionic
+        ruby:
+        - 2.6.6
+        - truffleruby-head
         task:
         - test
         - smoke
         - build
-    container:
-      image: rubylang/ruby:${{ matrix.container_tag }}
     steps:
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
     - uses: actions/checkout@v1
     - name: Run test
       run: |
